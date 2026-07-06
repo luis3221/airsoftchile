@@ -13,6 +13,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Ruta de inicio
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('inicio');
+
+// Ruta para eventos
+Route::get('/eventos', function () {
+    return view('eventos');
+})->name('eventos');
+
+// Ruta para el foro
+Route::get('/foro', function () {
+    return view('foro');
+})->name('foro');
+
+// Ruta para tiendas
+Route::get('/tiendas', function () {
+    return view('tiendas');
+})->name('tiendas');
+
+Route::get('/canchas', function () {
+    return view('canchas');
+})->name('canchas');
