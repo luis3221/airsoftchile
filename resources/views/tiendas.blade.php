@@ -64,15 +64,15 @@
 <!-- ============ TOP NAV ============ -->
 <header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant">
   <nav class="flex justify-between items-center px-gutter h-16 max-w-container-max mx-auto">
-    <a href="index.html" class="flex items-center gap-sm">
+    <a href="{{ url('/') }}" class="flex items-center gap-sm">
       <span class="material-symbols-outlined text-accent">shield</span>
       <span class="font-display text-xl text-on-surface uppercase tracking-tight">Airsoft Chile</span>
     </a>
     <div class="hidden md:flex items-center gap-xl">
-      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="eventos.html">Eventos</a>
-      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="foro.html">Foro</a>
-      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="campos.html">Campos</a>
-      <a class="text-on-surface border-b-2 border-accent pb-1 text-sm font-medium" href="#" aria-current="page">Tiendas</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="{{ url('/eventos') }}">Eventos</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="{{ url('/foro') }}">Foro</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="{{ url('/canchas') }}">Canchas</a>
+      <a class="text-on-surface border-b-2 border-accent pb-1 text-sm font-medium" href="{{ url('/tiendas') }}" aria-current="page">Tiendas</a>
     </div>
     <div class="flex items-center gap-sm">
       <div class="relative hidden sm:block">
@@ -118,7 +118,7 @@
   <div class="flex flex-col p-gutter gap-xs">
     <a href="eventos.html" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Eventos</a>
     <a href="foro.html" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Foro</a>
-    <a href="campos.html" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Campos</a>
+    <a href="canchas.html" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Canchas</a>
     <a href="#" class="px-4 py-3 rounded-lg bg-primary-container text-on-primary-container font-medium">Tiendas</a>
   </div>
 </div>
@@ -137,25 +137,34 @@
     </div>
   </div>
   <nav class="flex-1 flex flex-col gap-xs p-2 pt-md">
-    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="index.html">
+    <!-- Enlace a Inicio (welcome.blade.php) -->
+    <a class="bg-primary-container text-on-primary-container rounded-lg px-4 py-3 flex items-center gap-md text-sm font-medium" href="{{ url('/') }}">
       <span class="material-symbols-outlined text-[20px]">home</span> Inicio
     </a>
-    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="eventos.html">
+    
+    <!-- Enlace a Eventos (eventos.blade.php) -->
+    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="{{ url('/eventos') }}">
       <span class="material-symbols-outlined text-[20px]">event</span> Eventos
     </a>
-    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="foro.html">
+    
+    <!-- Enlace a Foro (foro.blade.php) -->
+    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="{{ url('/foro') }}">
       <span class="material-symbols-outlined text-[20px]">forum</span> Foro
     </a>
-    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="campos.html">
-      <span class="material-symbols-outlined text-[20px]">map</span> Campos
+    
+    <!-- Enlace a Canchas (canchas.blade.php) -->
+    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="{{ url('/canchas') }}">
+      <span class="material-symbols-outlined text-[20px]">map</span> Canchas
     </a>
-    <a class="bg-primary-container text-on-primary-container rounded-lg px-4 py-3 flex items-center gap-md text-sm font-medium" href="#" aria-current="page">
-      <span class="material-symbols-outlined text-[20px] fill-icon">storefront</span> Tiendas
+    
+    <!-- Enlace a Tiendas (tiendas.blade.php) -->
+    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="{{ url('/tiendas') }}">
+      <span class="material-symbols-outlined text-[20px]">storefront</span> Tiendas
     </a>
-  </nav>
+</nav>
   <div class="p-4 space-y-2 border-t border-outline-variant pt-4">
     <button class="w-full bg-accent text-on-accent font-display text-base py-3.5 uppercase tracking-wide clipped hover:brightness-110 active:scale-[0.98] transition-all">
-      Publicar evento
+      Publicar Tienda
     </button>
     <a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-4 py-2 text-sm transition-colors" href="#">
       <span class="material-symbols-outlined text-[20px]">settings</span> Ajustes

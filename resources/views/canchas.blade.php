@@ -64,21 +64,21 @@
 <!-- ============ TOP NAV ============ -->
 <header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant">
   <nav class="flex justify-between items-center px-gutter h-16 max-w-container-max mx-auto">
-    <a href="index.html" class="flex items-center gap-sm">
+    <a href="{{ url('/') }}" class="flex items-center gap-sm">
       <span class="material-symbols-outlined text-accent">shield</span>
       <span class="font-display text-xl text-on-surface uppercase tracking-tight">Airsoft Chile</span>
     </a>
     <div class="hidden md:flex items-center gap-xl">
-      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="eventos.html">Eventos</a>
-      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="foro.html">Foro</a>
-      <a class="text-on-surface border-b-2 border-accent pb-1 text-sm font-medium" href="#" aria-current="page">Campos</a>
-      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="#">Tiendas</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="{{ url('/eventos') }}">Eventos</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="{{ url('/foro') }}">Foro</a>
+      <a class="text-on-surface border-b-2 border-accent pb-1 text-sm font-medium" href="{{ url('/canchas') }}" aria-current="page">Canchas</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium" href="{{ url('/tiendas') }}">Tiendas</a>
     </div>
     <div class="flex items-center gap-sm">
       <div class="relative hidden sm:block">
-        <label for="search-op" class="sr-only">Buscar campo</label>
+        <label for="search-op" class="sr-only">Buscar Canchas</label>
         <span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span>
-        <input id="search-op" class="bg-surface-container-low border border-outline-variant rounded text-on-surface text-sm py-2 pl-9 pr-3 focus:border-accent focus:ring-0 w-48 font-mono placeholder:text-on-surface-variant/60" placeholder="Buscar campo…" type="text"/>
+        <input id="search-op" class="bg-surface-container-low border border-outline-variant rounded text-on-surface text-sm py-2 pl-9 pr-3 focus:border-accent focus:ring-0 w-48 font-mono placeholder:text-on-surface-variant/60" placeholder="Buscar cancha…" type="text"/>
       </div>
       <button aria-label="Cuenta" class="hidden sm:flex p-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors rounded-full">
         <span class="material-symbols-outlined text-[20px]">account_circle</span>
@@ -116,39 +116,55 @@
 <!-- Mobile menu -->
 <div id="mobile-menu" class="fixed inset-x-0 top-[6.5rem] z-40 md:hidden bg-surface-container border-b border-outline-variant -translate-y-[150%] opacity-0 pointer-events-none">
   <div class="flex flex-col p-gutter gap-xs">
-    <a href="eventos.html" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Eventos</a>
-    <a href="foro.html" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Foro</a>
-    <a href="#" class="px-4 py-3 rounded-lg bg-primary-container text-on-primary-container font-medium">Campos</a>
-    <a href="#" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Tiendas</a>
+    <a href="{{ url('/eventos') }}" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Eventos</a>
+    <a href="{{ url('/foro') }}" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Foro</a>
+    <a href="{{ url('/canchas') }}" class="px-4 py-3 rounded-lg bg-primary-container text-on-primary-container font-medium">Canchas</a>
+    <a href="{{ url('/tiendas') }}" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Tiendas</a>
   </div>
 </div>
 
 <!-- ============ SIDEBAR (desktop) ============ -->
 <aside class="hidden lg:flex flex-col fixed left-0 top-[6.5rem] h-[calc(100%-6.5rem)] z-30 bg-surface-container border-r border-outline-variant w-60">
   <div class="px-4 py-lg mb-sm border-b border-outline-variant">
-    <p class="font-display text-lg text-primary uppercase leading-none mb-1">Operador</p>
-    <p class="font-mono text-[11px] text-on-surface-variant uppercase tracking-wide">Santiago, CL</p>
+    <div class="flex items-center gap-sm">
+      <div class="w-10 h-10 rounded-lg overflow-hidden border border-primary shrink-0">
+        <img class="w-full h-full object-cover" alt="Retrato de un operador táctico de airsoft con camisa multicam oscura y casco de fibra de carbono." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLtqQFSTsnV4Rrd9wAH4cI5JfTMZJDkZ0FYHJNt2xfEVZ5Vfg9-U0-pE8BVFucbmVLtyUM9G8CqlueJ_5NMsnZHN4EajPTPYFF85OPYof-HCRUVEndgdEjqLQPCx_Km9lyItjrqKpTlWrALFrygsK0_iJJb3YVxaM2XhEtIJu5c0CzG_Jcri4VZcZlds45U_TAGm4CIbZzSWbeKKJi9n8C-aTL5xKG_JpliExA5CIHeBelKRusZLzxTA"/>
+      </div>
+      <div>
+        <p class="font-display text-lg text-primary uppercase leading-none mb-1">Operador</p>
+        <p class="font-mono text-[11px] text-on-surface-variant uppercase tracking-wide">Santiago, CL</p>
+      </div>
+    </div>
   </div>
   <nav class="flex-1 flex flex-col gap-xs p-2 pt-md">
-    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="index.html">
+    <!-- Enlace a Inicio (welcome.blade.php) -->
+    <a class="bg-primary-container text-on-primary-container rounded-lg px-4 py-3 flex items-center gap-md text-sm font-medium" href="{{ url('/') }}">
       <span class="material-symbols-outlined text-[20px]">home</span> Inicio
     </a>
-    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="eventos.html">
+    
+    <!-- Enlace a Eventos (eventos.blade.php) -->
+    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="{{ url('/eventos') }}">
       <span class="material-symbols-outlined text-[20px]">event</span> Eventos
     </a>
-    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="foro.html">
+    
+    <!-- Enlace a Foro (foro.blade.php) -->
+    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="{{ url('/foro') }}">
       <span class="material-symbols-outlined text-[20px]">forum</span> Foro
     </a>
-    <a class="bg-primary-container text-on-primary-container rounded-lg px-4 py-3 flex items-center gap-md text-sm font-medium" href="#" aria-current="page">
-      <span class="material-symbols-outlined text-[20px] fill-icon">map</span> Campos
+    
+    <!-- Enlace a Canchas (canchas.blade.php) -->
+    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="{{ url('/canchas') }}">
+      <span class="material-symbols-outlined text-[20px]">map</span> Canchas
     </a>
-    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="#">
+    
+    <!-- Enlace a Tiendas (tiendas.blade.php) -->
+    <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors" href="{{ url('/tiendas') }}">
       <span class="material-symbols-outlined text-[20px]">storefront</span> Tiendas
     </a>
-  </nav>
+</nav>
   <div class="p-4">
     <button class="w-full bg-accent text-on-accent font-display text-base py-3.5 uppercase tracking-wide clipped hover:brightness-110 active:scale-[0.98] transition-all">
-      Registrar mi campo
+      Registrar mi Cancha
     </button>
   </div>
 </aside>
@@ -160,7 +176,7 @@
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-md mb-xl">
       <div>
-        <h1 class="font-display text-3xl sm:text-4xl text-on-surface uppercase tracking-tight mb-xs">Directorio de campos</h1>
+        <h1 class="font-display text-3xl sm:text-4xl text-on-surface uppercase tracking-tight mb-xs">Directorio de Canchas</h1>
         <p class="font-mono text-[11px] text-primary tracking-[0.15em] uppercase">Infraestructura táctica — sector Chile</p>
       </div>
       <div class="flex gap-sm">
@@ -200,7 +216,7 @@
                 </label>
                 <label class="flex items-center gap-2 cursor-pointer group">
                   <input class="rounded border-outline-variant bg-surface-container" type="checkbox"/>
-                  <span class="text-sm group-hover:text-primary transition-colors">Campo abierto</span>
+                  <span class="text-sm group-hover:text-primary transition-colors">Cancha abierto</span>
                 </label>
               </div>
             </fieldset>
