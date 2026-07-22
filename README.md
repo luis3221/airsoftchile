@@ -1,66 +1,90 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Airsoft Chile — Directorio de Tiendas (Proyecto Libre, Evaluación U1)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Proyecto Laravel + Blade sobre la red comunitaria "Airsoft Chile". El módulo
+completo de la evaluación es el **directorio de tiendas** (`/tiendas`), con
+CRUD funcional (crear, listar, ver detalle, editar y eliminar tiendas).
 
-## About Laravel
+## Puesta en marcha local
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Base de datos SQLite (no requiere instalar MySQL)
+touch database/database.sqlite
+php artisan migrate --seed
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+php artisan serve
+```
 
-## Learning Laravel
+Abre `http://127.0.0.1:8000/tiendas` para ver el directorio ya poblado con
+3 tiendas de ejemplo (Tactical Santiago, Biobío Armory, Valpo Tactical
+Center).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+> Si prefieres MySQL, comenta el bloque `sqlite` del `.env` y descomenta el
+> bloque `mysql` (instrucciones dentro del propio `.env.example`), luego
+> corre `php artisan migrate --seed` de nuevo.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Rutas del módulo Tiendas
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Verbo    | URI                     | Acción     | Descripción                  |
+|----------|-------------------------|------------|-------------------------------|
+| GET      | `/tiendas`              | `index`    | Listado con filtros y búsqueda |
+| GET      | `/tiendas/create`       | `create`   | Formulario de creación        |
+| POST     | `/tiendas`              | `store`    | Guarda una tienda nueva        |
+| GET      | `/tiendas/{tienda}`     | `show`     | Ficha de detalle               |
+| GET      | `/tiendas/{tienda}/edit`| `edit`     | Formulario de edición          |
+| PUT      | `/tiendas/{tienda}`     | `update`   | Actualiza una tienda            |
+| DELETE   | `/tiendas/{tienda}`     | `destroy`  | Elimina una tienda               |
 
-## Laravel Sponsors
+Generadas automáticamente con `Route::resource('tiendas', TiendaController::class)`
+en `routes/web.php`.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Arquitectura (cómo se conectan las capas)
 
-### Premium Partners
+```
+Request  →  routes/web.php  →  TiendaController  →  TiendaService  →  Tienda (Eloquent)  →  SQLite
+                                       ↓
+                              resources/views/tiendas/*.blade.php
+                                       ↓
+                              layouts/app.blade.php (+ partials + <x-store-card>)
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **`app/Models/Tienda.php`** — modelo Eloquent de la entidad, con
+  `regiones()` y `categorias()` como catálogos estáticos usados por
+  filtros y formularios.
+- **`app/Services/TiendaService.php`** — capa de servicio: el controlador
+  nunca consulta el modelo directamente, siempre pasa por aquí
+  (`listar`, `buscar`, `crear`, `actualizar`, `eliminar`).
+- **`app/Http/Controllers/TiendaController.php`** — recibe el servicio por
+  inyección de dependencias en el constructor; cada método es breve y
+  delega la lógica.
+- **`app/Http/Requests/TiendaRequest.php`** — reglas de validación
+  reutilizadas tanto en `store` como en `update`.
+- **`app/View/Components/StoreCard.php`** + `resources/views/components/store-card.blade.php`
+  — componente Blade reutilizable (`<x-store-card :tienda="$tienda" />`),
+  usado dentro del `@foreach` del listado.
+- **`resources/views/layouts/app.blade.php`** — layout base con `@yield`,
+  reutilizado por las 4 vistas del módulo vía `@extends`.
+- **`resources/views/partials/`** — `nav`, `sidebar`, `footer`,
+  `bottom-nav`, incluidos en el layout con `@include`.
+- **`resources/views/tiendas/_form.blade.php`** — formulario compartido,
+  incluido tanto por `create.blade.php` como por `edit.blade.php`.
 
-## Contributing
+## Datos de ejemplo (seeder)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+`database/seeders/TiendaSeeder.php` crea 3 tiendas de ejemplo al correr
+`php artisan migrate --seed`. Puedes editarlas o agregar más tiendas desde
+el propio formulario `/tiendas/create` una vez el proyecto esté corriendo.
 
-## Code of Conduct
+## Otras páginas del sitio
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+`/`, `/eventos`, `/foro` y `/canchas` siguen siendo vistas estáticas (no
+forman parte del alcance de esta evaluación); solo se les actualizó el
+enlace de navegación a `/tiendas` para que sigan apuntando al directorio
+real.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+*El README original generado por Laravel se conserva en `README_LARAVEL.md`.*
