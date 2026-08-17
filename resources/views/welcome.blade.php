@@ -221,10 +221,23 @@
           class="p-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors rounded-full">
           <span class="material-symbols-outlined text-[20px]">search</span>
         </button>
-        <button id="btn-login" aria-label="Cuenta"
-          class="hidden sm:flex p-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors rounded-full cursor-pointer">
-          <span class="material-symbols-outlined text-[20px]">account_circle</span>
-        </button>
+        @auth
+          <div class="hidden sm:flex items-center gap-sm">
+            <span class="text-sm text-on-surface-variant">Hola, {{ Auth::user()->name }}</span>
+            <form action="{{ route('logout') }}" method="POST">
+              @csrf
+              <button type="submit" aria-label="Cerrar sesión"
+                class="p-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors rounded-full">
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+              </button>
+            </form>
+          </div>
+        @else
+          <a href="{{ route('login') }}" aria-label="Iniciar sesión"
+            class="hidden sm:flex p-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors rounded-full">
+            <span class="material-symbols-outlined text-[20px]">account_circle</span>
+          </a>
+        @endauth
         <button id="menu-btn" aria-label="Abrir menú" aria-expanded="false"
           class="md:hidden p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full">
           <span class="material-symbols-outlined text-[20px]">menu</span>

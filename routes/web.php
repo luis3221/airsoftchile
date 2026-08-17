@@ -1,11 +1,29 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TiendaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome'); // o la vista que uses para el inicio
 });
+
+/*
+|--------------------------------------------------------------------------
+| Autenticación
+|--------------------------------------------------------------------------
+*/
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'create'])->name('login');
+    Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+    Route::get('/register', [RegisterController::class, 'create'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+});
+
+Route::post('/logout', [LoginController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
 
 Route::get('/eventos', function () {
     return view('eventos');
@@ -34,4 +52,12 @@ Route::get('/canchas', function () {
 |  PUT    /tiendas/{tienda}      -> update  (actualizar)
 |  DELETE /tiendas/{tienda}      -> destroy (eliminar)
 */
-Route::resource('tiendas', TiendaController::class);
+// Gestionar tiendas (crear, editar, eliminar) requiere haber iniciado sesión.
+// Debe registrarse antes que el grupo público: /tiendas/create es una ruta
+// literal y tiene que resolverse antes que el comodín /tiendas/{tienda}.
+Route::resource('tiendas', TiendaController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware('auth');
+
+Route::resource('tiendas', TiendaController::class)
+    ->except(['create', 'store', 'edit', 'update', 'destroy']);
