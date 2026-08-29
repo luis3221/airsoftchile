@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             TiendaSeeder::class,
+            CanchaSeeder::class,
+            EventoSeeder::class,
         ]);
     }
 }

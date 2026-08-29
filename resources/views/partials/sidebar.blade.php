@@ -18,8 +18,8 @@
     <span class="material-symbols-outlined text-[20px]">home</span> Inicio
   </a>
 
-  <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors"
-    href="{{ url('/eventos') }}">
+  <a class="{{ request()->is('eventos*') ? 'bg-primary-container text-on-primary-container' : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high' }} px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors"
+    href="{{ route('eventos.index') }}">
     <span class="material-symbols-outlined text-[20px]">event</span> Eventos
   </a>
 
@@ -28,9 +28,9 @@
     <span class="material-symbols-outlined text-[20px]">forum</span> Foro
   </a>
 
-  <a class="text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors"
-    href="{{ url('/canchas') }}">
-    <span class="material-symbols-outlined text-[20px]">map</span> Canchas
+  <a class="{{ request()->is('canchas*') ? 'bg-primary-container text-on-primary-container' : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high' }} px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors"
+    href="{{ route('canchas.index') }}">
+    <span class="material-symbols-outlined text-[20px]">terrain</span> Canchas
   </a>
 
   <a class="{{ request()->is('tiendas*') ? 'bg-primary-container text-on-primary-container' : 'text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high' }} px-4 py-3 rounded-lg flex items-center gap-md text-sm font-medium transition-colors"
@@ -39,8 +39,16 @@
   </a>
 </nav>
 <div class="p-4 space-y-2 border-t border-outline-variant pt-4">
-  <a href="{{ route('tiendas.create') }}"
+  <a href="{{ route('eventos.create') }}"
     class="w-full block text-center bg-accent text-on-accent font-display text-base py-3.5 uppercase tracking-wide clipped hover:brightness-110 active:scale-[0.98] transition-all">
+    Publicar Evento
+  </a>
+  <a href="{{ route('canchas.create') }}"
+    class="w-full block text-center bg-surface-container-high border border-outline-variant text-on-surface font-display text-base py-3.5 uppercase tracking-wide clipped hover:border-primary active:scale-[0.98] transition-all">
+    Publicar Cancha
+  </a>
+  <a href="{{ route('tiendas.create') }}"
+    class="w-full block text-center bg-surface-container-high border border-outline-variant text-on-surface font-display text-base py-3.5 uppercase tracking-wide clipped hover:border-primary active:scale-[0.98] transition-all">
     Publicar Tienda
   </a>
   <a class="flex items-center gap-md text-on-surface-variant hover:text-on-surface px-4 py-2 text-sm transition-colors"

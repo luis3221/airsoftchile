@@ -342,13 +342,6 @@
         <span class="material-symbols-outlined text-[20px]">storefront</span> Tiendas
       </a>
     </nav>
-
-    <div class="p-4">
-      <button
-        class="w-full bg-accent text-on-accent font-display text-base py-3.5 uppercase tracking-wide clipped hover:brightness-110 active:scale-[0.98] transition-all">
-        Publicar evento
-      </button>
-    </div>
     <div class="p-2 pb-4 border-t border-outline-variant pt-2">
       <a class="text-on-surface-variant hover:text-on-surface px-4 py-2 flex items-center gap-md text-sm transition-colors"
         href="#">

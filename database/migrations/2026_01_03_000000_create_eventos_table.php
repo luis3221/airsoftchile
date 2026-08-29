@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('eventos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->string('region');
+            $table->string('categoria');
+            $table->string('lugar')->nullable();
+            $table->date('fecha');
+            $table->time('hora')->nullable();
+            $table->unsignedInteger('tarifa')->nullable();
+            $table->unsignedInteger('cupos')->nullable();
+            $table->string('imagen')->nullable();
+            $table->text('descripcion')->nullable();
+            $table->boolean('inscripcion_abierta')->default(true);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('eventos');
+    }
+};

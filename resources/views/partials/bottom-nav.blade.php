@@ -5,14 +5,14 @@
     <span class="material-symbols-outlined text-[22px]">home</span>
     <span class="text-[10px] font-mono uppercase">Inicio</span>
   </a>
-  <a href="{{ url('/eventos') }}"
+  <a href="{{ route('eventos.index') }}"
     class="flex flex-col items-center gap-0.5 text-on-surface-variant hover:text-on-surface">
     <span class="material-symbols-outlined text-[22px]">event</span>
     <span class="text-[10px] font-mono uppercase">Eventos</span>
   </a>
-  <a href="{{ url('/canchas') }}"
+  <a href="{{ route('canchas.index') }}"
     class="flex flex-col items-center gap-0.5 text-on-surface-variant hover:text-on-surface">
-    <span class="material-symbols-outlined text-[22px]">map</span>
+    <span class="material-symbols-outlined text-[22px]">terrain</span>
     <span class="text-[10px] font-mono uppercase">Canchas</span>
   </a>
   <a href="{{ url('/foro') }}"

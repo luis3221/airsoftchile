@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CanchaController;
+use App\Http\Controllers\EventoController;
 use App\Http\Controllers\TiendaController;
 use Illuminate\Support\Facades\Route;
 
@@ -25,16 +27,8 @@ Route::post('/logout', [LoginController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
 
-Route::get('/eventos', function () {
-    return view('eventos');
-});
-
 Route::get('/foro', function () {
     return view('foro');
-});
-
-Route::get('/canchas', function () {
-    return view('canchas');
 });
 
 /*
@@ -60,4 +54,30 @@ Route::resource('tiendas', TiendaController::class)
     ->middleware('auth');
 
 Route::resource('tiendas', TiendaController::class)
+    ->except(['create', 'store', 'edit', 'update', 'destroy']);
+
+/*
+|--------------------------------------------------------------------------
+| Módulo Canchas (CRUD completo)
+|--------------------------------------------------------------------------
+| Mismo patrón que el módulo de tiendas.
+*/
+Route::resource('canchas', CanchaController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware('auth');
+
+Route::resource('canchas', CanchaController::class)
+    ->except(['create', 'store', 'edit', 'update', 'destroy']);
+
+/*
+|--------------------------------------------------------------------------
+| Módulo Eventos (CRUD completo)
+|--------------------------------------------------------------------------
+| Mismo patrón que el módulo de tiendas.
+*/
+Route::resource('eventos', EventoController::class)
+    ->only(['create', 'store', 'edit', 'update', 'destroy'])
+    ->middleware('auth');
+
+Route::resource('eventos', EventoController::class)
     ->except(['create', 'store', 'edit', 'update', 'destroy']);

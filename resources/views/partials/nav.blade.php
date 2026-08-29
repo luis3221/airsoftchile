@@ -6,12 +6,12 @@
       <span class="font-display text-xl text-on-surface uppercase tracking-tight">Airsoft Chile</span>
     </a>
     <div class="hidden md:flex items-center gap-xl">
-      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium"
-        href="{{ url('/eventos') }}">Eventos</a>
+      <a class="{{ request()->is('eventos*') ? 'text-on-surface border-b-2 border-accent pb-1' : 'text-on-surface-variant hover:text-on-surface' }} transition-colors text-sm font-medium"
+        href="{{ route('eventos.index') }}" @if (request()->is('eventos*')) aria-current="page" @endif>Eventos</a>
       <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium"
         href="{{ url('/foro') }}">Foro</a>
-      <a class="text-on-surface-variant hover:text-on-surface transition-colors text-sm font-medium"
-        href="{{ url('/canchas') }}">Canchas</a>
+      <a class="{{ request()->is('canchas*') ? 'text-on-surface border-b-2 border-accent pb-1' : 'text-on-surface-variant hover:text-on-surface' }} transition-colors text-sm font-medium"
+        href="{{ route('canchas.index') }}" @if (request()->is('canchas*')) aria-current="page" @endif>Canchas</a>
       <a class="{{ request()->is('tiendas*') ? 'text-on-surface border-b-2 border-accent pb-1' : 'text-on-surface-variant hover:text-on-surface' }} transition-colors text-sm font-medium"
         href="{{ route('tiendas.index') }}" @if (request()->is('tiendas*')) aria-current="page" @endif>Tiendas</a>
     </div>
@@ -80,10 +80,10 @@
 <div id="mobile-menu"
   class="fixed inset-x-0 top-[6.5rem] z-40 md:hidden bg-surface-container border-b border-outline-variant -translate-y-[150%] opacity-0 pointer-events-none">
   <div class="flex flex-col p-gutter gap-xs">
-    <a href="{{ url('/eventos') }}"
+    <a href="{{ route('eventos.index') }}"
       class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Eventos</a>
     <a href="{{ url('/foro') }}" class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Foro</a>
-    <a href="{{ url('/canchas') }}"
+    <a href="{{ route('canchas.index') }}"
       class="px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high">Canchas</a>
     <a href="{{ route('tiendas.index') }}" class="px-4 py-3 rounded-lg bg-primary-container text-on-primary-container font-medium">Tiendas</a>
   </div>
