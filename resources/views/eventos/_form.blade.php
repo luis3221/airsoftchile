@@ -54,6 +54,8 @@
     @enderror
   </div>
 
+  <x-map-picker :lat="$evento->lat" :lng="$evento->lng" />
+
   <div>
     <label for="fecha" class="block text-sm font-medium text-on-surface-variant mb-1">Fecha</label>
     <input id="fecha" name="fecha" type="date"
@@ -90,6 +92,17 @@
       class="w-full bg-surface-container-high border border-outline-variant rounded text-on-surface text-sm py-2.5 px-3 focus:border-accent focus:ring-0"
       placeholder="50" />
     @error('cupos')
+      <p class="text-xs text-danger mt-1">{{ $message }}</p>
+    @enderror
+  </div>
+
+  <div class="sm:col-span-2">
+    <label for="sitio_web" class="block text-sm font-medium text-on-surface-variant mb-1">Sitio web / link de inscripción (opcional)</label>
+    <input id="sitio_web" name="sitio_web" type="text" value="{{ old('sitio_web', $evento->sitio_web) }}"
+      class="w-full bg-surface-container-high border border-outline-variant rounded text-on-surface text-sm py-2.5 px-3 focus:border-accent focus:ring-0"
+      placeholder="https://miformulario.cl" />
+    <p class="text-xs text-on-surface-variant mt-1">Se mostrará como un botón para visitar el sitio desde la ficha del evento.</p>
+    @error('sitio_web')
       <p class="text-xs text-danger mt-1">{{ $message }}</p>
     @enderror
   </div>

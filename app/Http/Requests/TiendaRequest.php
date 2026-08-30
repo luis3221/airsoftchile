@@ -28,7 +28,10 @@ class TiendaRequest extends FormRequest
             'region' => ['required', Rule::in(Tienda::regiones())],
             'categoria' => ['required', Rule::in(Tienda::categorias())],
             'direccion' => ['nullable', 'string', 'max:150'],
+            'lat' => ['nullable', 'numeric', 'between:-90,90'],
+            'lng' => ['nullable', 'numeric', 'between:-180,180'],
             'telefono' => ['nullable', 'string', 'max:30'],
+            'sitio_web' => ['nullable', 'url', 'max:500'],
             'imagen' => ['nullable', 'url', 'max:500'],
             'descripcion' => ['nullable', 'string', 'max:1000'],
             'calificacion' => ['nullable', 'numeric', 'min:0', 'max:5'],
@@ -48,6 +51,7 @@ class TiendaRequest extends FormRequest
             'categoria.required' => 'Selecciona una categoría.',
             'categoria.in' => 'La categoría seleccionada no es válida.',
             'imagen.url' => 'La imagen debe ser una URL válida.',
+            'sitio_web.url' => 'El link debe ser una URL válida (ej: https://ejemplo.cl).',
         ];
     }
 }

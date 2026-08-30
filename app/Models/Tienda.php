@@ -19,7 +19,10 @@ class Tienda extends Model
         'region',
         'categoria',
         'direccion',
+        'lat',
+        'lng',
         'telefono',
+        'sitio_web',
         'imagen',
         'descripcion',
         'calificacion',
@@ -34,6 +37,8 @@ class Tienda extends Model
     protected $casts = [
         'envios_nacionales' => 'boolean',
         'calificacion' => 'decimal:1',
+        'lat' => 'decimal:7',
+        'lng' => 'decimal:7',
     ];
 
     /**

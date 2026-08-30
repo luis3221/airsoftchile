@@ -11,6 +11,7 @@
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
@@ -126,6 +127,31 @@
 
     #mobile-menu {
       transition: transform .25s ease, opacity .2s ease;
+    }
+
+    #mapa-interactivo {
+      background-color: #14171a;
+    }
+
+    #mapa-interactivo .leaflet-popup-content-wrapper {
+      background: #14171a;
+      color: #ecede7;
+      border: 1px solid #2b3033;
+      border-radius: 8px;
+    }
+
+    #mapa-interactivo .leaflet-popup-tip {
+      background: #14171a;
+    }
+
+    #mapa-interactivo .leaflet-control-zoom a {
+      background-color: #14171a;
+      color: #ecede7;
+      border-color: #2b3033;
+    }
+
+    input[type="checkbox"] {
+      accent-color: #ff8a3d;
     }
   </style>
 </head>
@@ -512,64 +538,42 @@
     <section id="mapa" class="p-gutter max-w-container-max mx-auto mb-xl scroll-mt-24">
       <div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden relative">
         <div
-          class="absolute top-4 left-4 sm:top-6 sm:left-6 z-20 glass border border-outline-variant rounded-lg p-md max-w-xs">
+          class="absolute top-4 left-4 sm:top-6 sm:left-6 z-[1000] glass border border-outline-variant rounded-lg p-md max-w-xs">
           <h3 class="font-display text-lg text-primary uppercase mb-xs">Mapa estratégico</h3>
-          <p class="text-sm text-on-surface-variant mb-md leading-relaxed">Más de 45 campos verificados en todo Chile.
-            Disponibilidad y calificaciones en tiempo real.</p>
+          <p id="mapa-resumen" class="text-sm text-on-surface-variant mb-md leading-relaxed">Cargando puntos
+            registrados en la plataforma…</p>
           <div class="space-y-sm">
-            <div class="flex items-center gap-md text-sm">
-              <span class="w-3 h-3 bg-primary rotate-45 shrink-0"></span><span class="font-mono text-[12px]">Arenas
-                CQB</span>
-            </div>
-            <div class="flex items-center gap-md text-sm">
-              <span class="w-3 h-3 bg-accent rotate-45 shrink-0"></span><span class="font-mono text-[12px]">Campos
-                Milsim</span>
-            </div>
-            <div class="flex items-center gap-md text-sm">
-              <span class="w-3 h-3 bg-on-surface-variant rotate-45 shrink-0"></span><span
-                class="font-mono text-[12px]">Campos de práctica</span>
-            </div>
+            <label class="flex items-center gap-md text-sm cursor-pointer">
+              <input type="checkbox" data-tipo="evento" checked
+                class="rounded border-outline-variant bg-surface-container-high shrink-0" />
+              <span class="w-3 h-3 bg-primary rotate-45 shrink-0"></span>
+              <span class="font-mono text-[12px]">Eventos (<span id="count-evento">0</span>)</span>
+            </label>
+            <label class="flex items-center gap-md text-sm cursor-pointer">
+              <input type="checkbox" data-tipo="cancha" checked
+                class="rounded border-outline-variant bg-surface-container-high shrink-0" />
+              <span class="w-3 h-3 bg-accent rotate-45 shrink-0"></span>
+              <span class="font-mono text-[12px]">Canchas (<span id="count-cancha">0</span>)</span>
+            </label>
+            <label class="flex items-center gap-md text-sm cursor-pointer">
+              <input type="checkbox" data-tipo="tienda" checked
+                class="rounded border-outline-variant bg-surface-container-high shrink-0" />
+              <span class="w-3 h-3 bg-on-surface-variant rotate-45 shrink-0"></span>
+              <span class="font-mono text-[12px]">Tiendas (<span id="count-tienda">0</span>)</span>
+            </label>
           </div>
-          <button
-            class="w-full mt-lg bg-surface-container-high text-on-surface border border-outline-variant py-2.5 text-sm font-medium uppercase hover:bg-surface-container-high/70 transition-colors rounded">
-            Filtros (0)
-          </button>
         </div>
 
-        <div class="h-[520px] w-full relative grid-overlay overflow-hidden">
-          <img class="w-full h-full object-cover opacity-40 grayscale contrast-125"
-            alt="Mapa topográfico de Chile con marcadores de ubicación de campos de airsoft."
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7Jk4BirwM_t77htBHzb6TyCqcsdTshT5CTVGLHRVbg2NYp-faKvcdxab4lgwnvy3gNJi6fSZSsG1sxnojkN_lWvB9RstX52uNuxhPa3wnwTB5xm0sp3-c3L2eSh7zY7Bi5AtXWvogDAnLNRfo2Ujd8osbMJS_FGsnaLu9HBByDWH8rgQq0uI69PbGQ0X7Sn0BDCSJLGWSwyi7hVoaT0M4_LS15wqyV43tbplubh6hEqu4rqoag0UQHA" />
+        <div id="mapa-interactivo" class="h-[520px] w-full relative"></div>
 
-          <button class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 group"
-            aria-label="Santiago BattleZone">
-            <span class="block w-4 h-4 bg-primary rotate-45 border-2 border-surface animate-pulse"></span>
-            <span
-              class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block group-focus:block glass border border-primary rounded p-2 text-xs font-mono whitespace-nowrap">[HQ]
-              Santiago BattleZone</span>
-          </button>
-          <button class="absolute top-1/2 left-1/2 translate-x-8 translate-y-12 group"
-            aria-label="Operaciones Puerto Valparaíso">
-            <span class="block w-4 h-4 bg-accent rotate-45 border-2 border-surface"></span>
-            <span
-              class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block group-focus:block glass border border-accent rounded p-2 text-xs font-mono whitespace-nowrap">Operaciones
-              Puerto Valparaíso</span>
-          </button>
-          <button class="absolute bottom-1/4 left-1/2 -translate-x-20 group" aria-label="Campo Forestal Concepción">
-            <span class="block w-4 h-4 bg-on-surface-variant rotate-45 border-2 border-surface"></span>
-            <span
-              class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block group-focus:block glass border border-outline-variant rounded p-2 text-xs font-mono whitespace-nowrap">Campo
-              Forestal Concepción</span>
-          </button>
-
-          <div class="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex flex-col gap-sm items-end">
-            <div
-              class="bg-surface text-on-surface-variant font-mono px-3 py-1 border border-outline-variant text-[10px] rounded">
-              LAT -33.4489 / LONG -70.6693</div>
-            <div
-              class="bg-surface text-on-surface-variant font-mono px-3 py-1 border border-outline-variant text-[10px] rounded">
-              12 operaciones activas</div>
-          </div>
+        <div
+          class="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 z-[1000] flex flex-col gap-sm items-end pointer-events-none">
+          <div id="mapa-coords"
+            class="bg-surface text-on-surface-variant font-mono px-3 py-1 border border-outline-variant text-[10px] rounded">
+            LAT -35.6751 / LONG -71.5430</div>
+          <div id="mapa-total"
+            class="bg-surface text-on-surface-variant font-mono px-3 py-1 border border-outline-variant text-[10px] rounded">
+            Cargando…</div>
         </div>
       </div>
     </section>
@@ -649,10 +653,8 @@
     </a>
   </nav>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
   <script>
-    // map pin toggle for keyboard/touch users
-    document.querySelectorAll('button[aria-label] > span + span').forEach(() => { });
-
     // mobile menu toggle
     const menuBtn = document.getElementById('menu-btn');
     const menu = document.getElementById('mobile-menu');
@@ -693,6 +695,105 @@
         if (event.target === modal) {
           modal.classList.add('hidden');
         }
+      });
+    });
+
+    // ============ MAPA INTERACTIVO ============
+    document.addEventListener('DOMContentLoaded', () => {
+      const mapEl = document.getElementById('mapa-interactivo');
+      if (!mapEl || !window.L) return;
+
+      const map = L.map('mapa-interactivo', {
+        scrollWheelZoom: false,
+        zoomControl: false,
+        attributionControl: false,
+      }).setView([-35.6751, -71.5430], 5);
+
+      L.control.zoom({ position: 'topright' }).addTo(map);
+      L.control.attribution({ position: 'bottomleft', prefix: false })
+        .addAttribution('&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>')
+        .addTo(map);
+
+      // Evita que el scroll de la página quede atrapado dentro del mapa.
+      mapEl.addEventListener('mouseenter', () => map.scrollWheelZoom.enable());
+      mapEl.addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+      }).addTo(map);
+
+      const colores = { evento: '#a8b48c', cancha: '#ff8a3d', tienda: '#a8ada3' };
+      const nombresTipo = { evento: 'Evento', cancha: 'Cancha', tienda: 'Tienda' };
+      const capas = {
+        evento: L.layerGroup().addTo(map),
+        cancha: L.layerGroup().addTo(map),
+        tienda: L.layerGroup().addTo(map),
+      };
+
+      function iconoPara(tipo) {
+        return L.divIcon({
+          className: '',
+          html: `<span style="display:block;width:16px;height:16px;background:${colores[tipo]};transform:rotate(45deg);border:2px solid #0a0c0d;box-shadow:0 0 0 1px ${colores[tipo]}66;"></span>`,
+          iconSize: [16, 16],
+          iconAnchor: [8, 8],
+          popupAnchor: [0, -10],
+        });
+      }
+
+      const mapaCoords = document.getElementById('mapa-coords');
+      const mapaTotal = document.getElementById('mapa-total');
+      const mapaResumen = document.getElementById('mapa-resumen');
+
+      fetch('{{ route('mapa.puntos') }}')
+        .then((res) => res.json())
+        .then((puntos) => {
+          const conteos = { evento: 0, cancha: 0, tienda: 0 };
+          const bounds = [];
+
+          puntos.forEach((punto) => {
+            const marker = L.marker([punto.lat, punto.lng], { icon: iconoPara(punto.tipo) });
+            marker.bindPopup(`
+              <div style="font-family:'Inter',sans-serif;min-width:170px;">
+                <span style="display:inline-block;font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:${colores[punto.tipo]};margin-bottom:4px;">${nombresTipo[punto.tipo]} · ${punto.categoria ?? ''}</span>
+                <strong style="display:block;margin-bottom:2px;">${punto.nombre}</strong>
+                <span style="display:block;font-size:12px;color:#a8ada3;margin-bottom:8px;">${punto.subtitulo ?? ''}</span>
+                <a href="${punto.url}" style="color:#ff8a3d;font-size:12px;text-decoration:underline;">Ver detalle →</a>
+              </div>
+            `);
+            marker.on('click', () => {
+              mapaCoords.textContent = `LAT ${punto.lat.toFixed(4)} / LONG ${punto.lng.toFixed(4)}`;
+            });
+            capas[punto.tipo].addLayer(marker);
+            conteos[punto.tipo]++;
+            bounds.push([punto.lat, punto.lng]);
+          });
+
+          document.getElementById('count-evento').textContent = conteos.evento;
+          document.getElementById('count-cancha').textContent = conteos.cancha;
+          document.getElementById('count-tienda').textContent = conteos.tienda;
+          mapaTotal.textContent = `${puntos.length} ${puntos.length === 1 ? 'punto activo' : 'puntos activos'}`;
+          mapaResumen.textContent = puntos.length
+            ? `${puntos.length} puntos verificados en todo Chile. Eventos, canchas y tiendas en tiempo real.`
+            : 'Aún no hay puntos con ubicación registrada. Publica un evento, cancha o tienda con coordenadas para verlo aquí.';
+
+          if (bounds.length) {
+            map.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 });
+          }
+        })
+        .catch(() => {
+          mapaResumen.textContent = 'No se pudieron cargar los puntos del mapa.';
+          mapaTotal.textContent = '—';
+        });
+
+      document.querySelectorAll('[data-tipo]').forEach((checkbox) => {
+        checkbox.addEventListener('change', () => {
+          const tipo = checkbox.dataset.tipo;
+          if (checkbox.checked) {
+            map.addLayer(capas[tipo]);
+          } else {
+            map.removeLayer(capas[tipo]);
+          }
+        });
       });
     });
   </script>

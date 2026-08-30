@@ -19,7 +19,10 @@ class Cancha extends Model
         'region',
         'categoria',
         'direccion',
+        'lat',
+        'lng',
         'telefono',
+        'sitio_web',
         'imagen',
         'descripcion',
         'calificacion',
@@ -34,6 +37,8 @@ class Cancha extends Model
     protected $casts = [
         'estacionamiento' => 'boolean',
         'calificacion' => 'decimal:1',
+        'lat' => 'decimal:7',
+        'lng' => 'decimal:7',
     ];
 
     /**

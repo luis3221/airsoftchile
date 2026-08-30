@@ -28,6 +28,9 @@ class EventoRequest extends FormRequest
             'region' => ['required', Rule::in(Evento::regiones())],
             'categoria' => ['required', Rule::in(Evento::categorias())],
             'lugar' => ['nullable', 'string', 'max:150'],
+            'lat' => ['nullable', 'numeric', 'between:-90,90'],
+            'lng' => ['nullable', 'numeric', 'between:-180,180'],
+            'sitio_web' => ['nullable', 'url', 'max:500'],
             'fecha' => ['required', 'date'],
             'hora' => ['nullable', 'date_format:H:i'],
             'tarifa' => ['nullable', 'integer', 'min:0'],
@@ -53,6 +56,7 @@ class EventoRequest extends FormRequest
             'fecha.date' => 'Ingresa una fecha válida.',
             'hora.date_format' => 'Ingresa una hora válida (HH:MM).',
             'imagen.url' => 'La imagen debe ser una URL válida.',
+            'sitio_web.url' => 'El link debe ser una URL válida (ej: https://ejemplo.cl).',
         ];
     }
 }

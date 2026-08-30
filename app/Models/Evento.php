@@ -19,6 +19,9 @@ class Evento extends Model
         'region',
         'categoria',
         'lugar',
+        'lat',
+        'lng',
+        'sitio_web',
         'fecha',
         'hora',
         'tarifa',
@@ -38,6 +41,8 @@ class Evento extends Model
         'tarifa' => 'integer',
         'cupos' => 'integer',
         'inscripcion_abierta' => 'boolean',
+        'lat' => 'decimal:7',
+        'lng' => 'decimal:7',
     ];
 
     /**

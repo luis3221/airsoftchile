@@ -63,7 +63,13 @@
       </div>
     </div>
 
-    <div class="p-md grid grid-cols-2 gap-2 border-t border-outline-variant bg-surface-container-low">
+    <div class="p-md grid {{ $evento->sitio_web ? 'grid-cols-3' : 'grid-cols-2' }} gap-2 border-t border-outline-variant bg-surface-container-low">
+      @if ($evento->sitio_web)
+        <a href="{{ $evento->sitio_web }}" target="_blank" rel="noopener noreferrer"
+          class="flex items-center justify-center gap-1.5 py-2 bg-accent text-on-accent hover:brightness-110 transition-all text-sm font-medium rounded">
+          <span class="material-symbols-outlined text-[16px]">open_in_new</span> Visitar sitio
+        </a>
+      @endif
       <a href="{{ route('eventos.edit', $evento) }}"
         class="flex items-center justify-center gap-1.5 py-2 bg-surface-container-high border border-outline-variant hover:border-primary transition-colors text-on-surface text-sm font-medium rounded">
         <span class="material-symbols-outlined text-[16px]">edit</span> Editar

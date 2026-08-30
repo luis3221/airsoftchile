@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CanchaController;
 use App\Http\Controllers\EventoController;
+use App\Http\Controllers\MapaController;
 use App\Http\Controllers\TiendaController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,10 @@ Route::post('/logout', [LoginController::class, 'destroy'])
 Route::get('/foro', function () {
     return view('foro');
 });
+
+// Endpoint público que alimenta el mapa interactivo de la portada con los
+// eventos, canchas y tiendas que tienen coordenadas registradas.
+Route::get('/mapa/puntos', [MapaController::class, 'puntos'])->name('mapa.puntos');
 
 /*
 |--------------------------------------------------------------------------

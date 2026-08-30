@@ -64,6 +64,19 @@
     @enderror
   </div>
 
+  <x-map-picker :lat="$cancha->lat" :lng="$cancha->lng" />
+
+  <div class="sm:col-span-2">
+    <label for="sitio_web" class="block text-sm font-medium text-on-surface-variant mb-1">Sitio web / link (opcional)</label>
+    <input id="sitio_web" name="sitio_web" type="text" value="{{ old('sitio_web', $cancha->sitio_web) }}"
+      class="w-full bg-surface-container-high border border-outline-variant rounded text-on-surface text-sm py-2.5 px-3 focus:border-accent focus:ring-0"
+      placeholder="https://micancha.cl" />
+    <p class="text-xs text-on-surface-variant mt-1">Se mostrará como un botón para visitar el sitio desde la ficha de la cancha.</p>
+    @error('sitio_web')
+      <p class="text-xs text-danger mt-1">{{ $message }}</p>
+    @enderror
+  </div>
+
   <div class="sm:col-span-2">
     <label for="imagen" class="block text-sm font-medium text-on-surface-variant mb-1">URL de la foto (opcional)</label>
     <input id="imagen" name="imagen" type="text" value="{{ old('imagen', $cancha->imagen) }}"

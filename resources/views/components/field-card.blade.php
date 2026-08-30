@@ -2,7 +2,15 @@
   class="bg-surface-container border border-outline-variant rounded-lg overflow-hidden flex flex-col group hover:border-primary/50 transition-colors">
   <div class="px-md py-1.5 bg-surface-container-high flex items-center justify-between border-b border-outline-variant">
     <span class="font-mono text-[10px] text-primary uppercase">Operativa</span>
-    <span class="font-mono text-[10px] text-on-surface-variant">ID: CN-{{ str_pad($cancha->id, 4, '0', STR_PAD_LEFT) }}</span>
+    <div class="flex items-center gap-2">
+      @if ($cancha->sitio_web)
+        <a href="{{ $cancha->sitio_web }}" target="_blank" rel="noopener noreferrer" title="Visitar sitio web"
+          class="text-on-surface-variant hover:text-accent transition-colors">
+          <span class="material-symbols-outlined text-[15px]">open_in_new</span>
+        </a>
+      @endif
+      <span class="font-mono text-[10px] text-on-surface-variant">ID: CN-{{ str_pad($cancha->id, 4, '0', STR_PAD_LEFT) }}</span>
+    </div>
   </div>
   <div class="p-md flex flex-col sm:flex-row gap-md">
     <div class="w-full sm:w-28 h-28 bg-surface border border-outline-variant rounded-lg overflow-hidden shrink-0 flex items-center justify-center">
